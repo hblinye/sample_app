@@ -10,10 +10,4 @@ module ApplicationHelper
     end
   end
   
-  def is_home(page_title = '')
-    if not page_title.empty?
-      true
-    end
-  end
-  
 end
