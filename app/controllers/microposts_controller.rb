@@ -3,6 +3,15 @@ class MicropostsController < ApplicationController
   before_action :correct_user,   only: :destroy
   def create
     @micropost = current_user.microposts.build(micropost_params)
+    content = @micropost.content
+    splitbyat    = content.split '@'
+    splitbyblank = splitbyat[1].split if !splitbyat[1].nil?
+    if replyname = splitbyblank.nil? ? nil : splitbyblank[0]
+      replyname  = replyname.slice 0,20 if replyname.length > 20
+    end
+    replyuser    = User.find_by(account_name: replyname)
+    @micropost.in_reply_to = replyuser.id if !replyuser.nil? && replyuser.id!=current_user.id 
+    
     if @micropost.save
       flash[:success] = "Micropost created!"
       redirect_to root_url

@@ -6,6 +6,7 @@ class UserTest < ActiveSupport::TestCase
   # end
   def setup
     @user = User.new(name: "Example User", email: "user@example.com",
+                     account_name: "Example_User", 
                      password: "foobar", password_confirmation: "foobar")
   end
 
@@ -58,6 +59,13 @@ class UserTest < ActiveSupport::TestCase
     assert_not duplicate_user.valid?
   end
 
+  test "account name should be unique" do
+    duplicate_user = @user.dup
+    duplicate_user.name  = "accountnameuniquetest"
+    duplicate_user.email = "accountnameuniquetest@example.com"
+    @user.save
+    assert_not duplicate_user.valid?
+  end
 
   test "password should be present (nonblank)" do
     @user.password = @user.password_confirmation = " " * 6

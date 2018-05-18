@@ -11,7 +11,14 @@ class UsersController < ApplicationController
   
   def show
    @user = User.find(params[:id])
-   @microposts = @user.microposts.paginate(page: params[:page])
+   replyposts = Micropost.find_by(content: "*@"+@user.name+"*")
+   # @microposts = @user.microposts.paginate(page: params[:page])
+   posts = @user.microposts
+   if(!replyposts.nil?)
+     @microposts = (replyposts + posts).paginate(page: params[:page])
+   else
+     @microposts = @user.microposts.paginate(page: params[:page])
+   end
   end
   
   def new
@@ -70,7 +77,7 @@ class UsersController < ApplicationController
   
     def user_params
       params.require(:user).permit(
-        :name, :email, :password, 
+        :name, :email, :account_name, :password, 
         :password_confirmation)
     end
     # beforeアクション

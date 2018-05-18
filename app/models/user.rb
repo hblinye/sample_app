@@ -17,6 +17,11 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
+   VALID_ACCOUNT_NAME = /\A[\w+$]/
+  validates :account_name, presence: true, length: {maximum: 50},
+                    format: { with: VALID_ACCOUNT_NAME},
+                    uniqueness: true
+                    
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   
@@ -86,7 +91,7 @@ class User < ApplicationRecord
     following_ids = "SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+                     OR user_id = :user_id OR in_reply_to = :user_id", user_id: id )
   end
   
     # ユーザーをフォローする

@@ -27,4 +27,11 @@ class ActionDispatch::IntegrationTest
                                           password: password,
                                           remember_me: remember_me } }
   end
+  
+  
+  def log_out
+    delete logout_path
+  end
+  
+  
 end
