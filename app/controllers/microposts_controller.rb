@@ -16,7 +16,9 @@ class MicropostsController < ApplicationController
     replyuser    = User.find_by(account_name: replyname)
     
     # 自分でないユーザーがいればin_reply_toにidを埋め込んで保存する
-    @micropost.in_reply_to = replyuser.id if !replyuser.nil? && replyuser.id!=current_user.id 
+     
+    @micropost.in_reply_to = replyuser.id if !replyuser.nil? && replyuser.id!=current_user.id
+
     
     if @micropost.save
       flash[:success] = "Micropost created!"
