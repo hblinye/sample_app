@@ -3,13 +3,19 @@ class MicropostsController < ApplicationController
   before_action :correct_user,   only: :destroy
   def create
     @micropost = current_user.microposts.build(micropost_params)
+    
+    # micropostの内容を取得
     content = @micropost.content
+    # `@`と` `の間のテキストを取得
     splitbyat    = content.split '@'
     splitbyblank = splitbyat[1].split if !splitbyat[1].nil?
     if replyname = splitbyblank.nil? ? nil : splitbyblank[0]
       replyname  = replyname.slice 0,20 if replyname.length > 20
     end
+    # あっているユーザーがいるかどうか検索
     replyuser    = User.find_by(account_name: replyname)
+    
+    # 自分でないユーザーがいればin_reply_toにidを埋め込んで保存する
     @micropost.in_reply_to = replyuser.id if !replyuser.nil? && replyuser.id!=current_user.id 
     
     if @micropost.save
