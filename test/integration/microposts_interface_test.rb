@@ -45,16 +45,14 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
     follow_redirect!
     first_micropost = @user.feed.paginate(page: 1).first
-    assert_equal @reply.id, first_micropost.in_reply_to
+    assert_equal @reply.account_name, first_micropost.in_reply_to
     log_out
     log_in_as(@reply)
     get root_path
     first_micropost = @reply.feed.paginate(page: 1).first
-    assert_equal @reply.id, first_micropost.in_reply_to
+    assert_equal @reply.account_name, first_micropost.in_reply_to
     assert_equal @user.id , first_micropost.user_id
-    
     
   end
     
-  
 end

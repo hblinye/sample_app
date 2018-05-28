@@ -17,7 +17,7 @@ class MicropostsController < ApplicationController
     
     # 自分でないユーザーがいればin_reply_toにidを埋め込んで保存する
      
-    @micropost.in_reply_to = replyuser.id if !replyuser.nil? && replyuser.id!=current_user.id
+    @micropost.in_reply_to = replyuser.account_name if !replyuser.nil? && replyuser.id!=current_user.id
 
     
     if @micropost.save

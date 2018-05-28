@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20180518020828) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
-    t.integer "in_reply_to"
+    t.string "in_reply_to"
     t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end

@@ -10,7 +10,6 @@ michael:
   activated_at: <%= Time.zone.now %>
   
 archer:
-  id:   99999
   name: Sterling_Archer
   email: duchess@example.gov
   account_name: Sterling_Archer
