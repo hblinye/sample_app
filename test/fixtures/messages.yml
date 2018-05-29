@@ -1,0 +1,16 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+first_message:
+  message: "this is the first message"
+  to_account_name: Sterling_Archer
+  user: michael
+
+second_message:
+  message: "second_message"
+  to_account_name: Sterling_Archer
+  user: michael
+
+third_message:
+  message: "third_message"
+  to_account_name: Michael_Example
+  user: archer

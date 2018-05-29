@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
+  has_many :messages  , dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
@@ -91,7 +92,20 @@ class User < ApplicationRecord
     following_ids = "SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id OR in_reply_to = :user_id", user_id: id )
+                     OR user_id = :user_id OR in_reply_to = :user_account_name", user_id: id, user_account_name: account_name)
+  end
+  
+  def allmessages
+    Message.where("user_id = :user_id OR to_account_name = :user_account_name", user_id: id,user_account_name: account_name)
+  end
+  
+  def messages_with_other_user(other_user)
+    Message.where("(user_id = :user_id AND to_account_name = :other_user_account_name)
+                    OR
+                   (user_id = :other_user_id AND to_account_name = :user_account_name)
+                  ",user_id: id,user_account_name: account_name,
+                    other_user_id: other_user.id,
+                    other_user_account_name: other_user.account_name)
   end
   
     # ユーザーをフォローする

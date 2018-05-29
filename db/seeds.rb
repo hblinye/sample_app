@@ -27,6 +27,11 @@ users = User.order(:created_at).take(6)
   users.each { |user| user.microposts.create!(content: content) }
 end
 
+15.times do
+  message = Faker::Lorem.sentence(5)
+  users.each { |user| user.messages.create!(message: message, to_account_name: "example_#{rand(1..6)}") }
+end
+
 # リレーションシップ
 users = User.all
 user  = users.first
