@@ -1,0 +1,5 @@
+<% if @other_user_flag %>
+<div class="col-md-12 send-to">
+<%= link_to "Send Message",message_path(@user.id), class: "btn btn-primary" %>
+</div>
+<% end %>

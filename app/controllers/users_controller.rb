@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   
   def show
    @user = User.find(params[:id])
+   @other_user_flag = !current_user?(@user)
    @microposts = @user.microposts.paginate(page: params[:page])
   end
   

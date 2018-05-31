@@ -4,7 +4,8 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   def setup
-    @user = users(:michael)
+    @user       = users(:michael)
+    @other_user = users(:archer)
   end
 
   test "profile display" do
@@ -18,5 +19,10 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     @user.microposts.paginate(page: 1).each do |micropost|
       assert_match micropost.content, response.body
     end
+    
+    get user_path(@other_user)
+    assert_select 'div.send-to'
   end
+  
+  
 end
