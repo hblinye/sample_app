@@ -16,6 +16,7 @@ class MessagesController < ApplicationController
       @messages = get_messages_with_id(@user.id)
       if @message.save
         @message = @current_user.messages.build(to_account_name: @user.account_name)
+        @contacts = get_contacts  
       end
       render "show"
     else
@@ -31,6 +32,8 @@ class MessagesController < ApplicationController
       params.require(:message).permit(:message, :to_account_name)
     end
     
+    
+    
     def get_messages_with_id(id)
       if(user = User.find(id))
       @message.to_account_name = user.account_name
@@ -38,11 +41,14 @@ class MessagesController < ApplicationController
       end
     end
     
+    
     def get_message_and_contacts
       @message  = @current_user.messages.build
       @contacts = get_contacts      
     end
     
+    
+    # メッセージのやりとりのあるユーザーのアカウント名をとる
     def get_contacts
       contacts = Array.new
       messages = @current_user.allmessages

@@ -29,4 +29,9 @@ class MessageTest < ActiveSupport::TestCase
     @message.message = "a" * 201
     assert_not @message.valid?
   end
+  
+  test "order should be most recent first" do
+    assert_equal messages(:third_message), Message.first
+  end
+  
 end
