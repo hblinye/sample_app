@@ -52,6 +52,15 @@ class UserTest < ActiveSupport::TestCase
     end
   end
   
+  test "account_name validation should be valid" do
+    invalid_account_names = ["ア123","啊123"," 123","abc 123"]
+    invalid_account_names.each do |invalid_account_name|
+      @user.account_name = invalid_account_name
+      assert_not @user.valid?
+    end
+    
+  end
+  
   test "email addresses should be unique" do
     duplicate_user = @user.dup
     duplicate_user.email = @user.email.upcase
@@ -61,10 +70,12 @@ class UserTest < ActiveSupport::TestCase
 
   test "account name should be unique" do
     duplicate_user = @user.dup
+    @user.save
     duplicate_user.name  = "accountnameuniquetest"
     duplicate_user.email = "accountnameuniquetest@example.com"
-    @user.save
     assert_not duplicate_user.valid?
+
+    
   end
 
   test "password should be present (nonblank)" do

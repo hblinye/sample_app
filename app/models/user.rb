@@ -18,8 +18,8 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-   VALID_ACCOUNT_NAME = /\A[\w+$]/
-  validates :account_name, presence: true, length: {maximum: 50},
+   VALID_ACCOUNT_NAME = /\A[\w+\-.]+\z/i
+  validates :account_name, presence: true, length: {maximum: 15},
                     format: { with: VALID_ACCOUNT_NAME},
                     uniqueness: true
                     
